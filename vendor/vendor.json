@@ -660,22 +660,22 @@
 			"revisionTime": "2019-01-02T18:18:36Z"
 		},
 		{
-			"checksumSHA1": "Lfx3TZWTWM2rP7su7K8rca6nXGc=",
+			"checksumSHA1": "+AKflz5CX9YMji6VcPhavPZ6MrU=",
 			"path": "github.com/spotinst/spotinst-sdk-go/service/elastigroup/providers/aws",
-			"revision": "39fba1d83364d6c591ad6522d06a25f3fbb0ef19",
-			"revisionTime": "2019-02-12T23:01:19Z"
+			"revision": "0e3fe42bc0c9249b1d350bd95636066719e96c2f",
+			"revisionTime": "2019-02-26T22:33:23Z"
 		},
 		{
-			"checksumSHA1": "NJXPqLq1Golbi3URZL+iYYI3rIo=",
+			"checksumSHA1": "u3IpexXg7GYUSQYydkq0qTzC35U=",
 			"path": "github.com/spotinst/spotinst-sdk-go/service/elastigroup/providers/azure",
-			"revision": "533861944a7f7479411542e16282ce9e72fa613d",
-			"revisionTime": "2018-12-21T00:18:36Z"
+			"revision": "0e3fe42bc0c9249b1d350bd95636066719e96c2f",
+			"revisionTime": "2019-02-26T22:33:23Z"
 		},
 		{
-			"checksumSHA1": "g1C1fGutZs1MSvzHjrEUKFrNt34=",
+			"checksumSHA1": "0i0Fiypb6w4T2F8RJpwG/RVtWVI=",
 			"path": "github.com/spotinst/spotinst-sdk-go/service/elastigroup/providers/gcp",
-			"revision": "650a58c6059238d4ada8d84f9083b619d7b86707",
-			"revisionTime": "2019-01-02T21:45:08Z"
+			"revision": "0e3fe42bc0c9249b1d350bd95636066719e96c2f",
+			"revisionTime": "2019-02-26T22:33:23Z"
 		},
 		{
 			"checksumSHA1": "KfARJ4Tsb0rNvxRMNgSVBG2yUag=",
