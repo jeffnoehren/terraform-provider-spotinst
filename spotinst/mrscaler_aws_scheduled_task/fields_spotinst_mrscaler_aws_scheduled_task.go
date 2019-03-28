@@ -15,7 +15,7 @@ import (
 func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 
 	fieldsMap[ScheduledTask] = commons.NewGenericField(
-		commons.ElastigroupScheduledTask,
+		commons.MRScalerAWSScheduledTask,
 		ScheduledTask,
 		&schema.Schema{
 			Type:     schema.TypeSet,

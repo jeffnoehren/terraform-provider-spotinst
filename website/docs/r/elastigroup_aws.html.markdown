@@ -58,7 +58,7 @@ resource "spotinst_elastigroup_aws" "default-elastigroup" {
   wait_for_capacity         = 5
   wait_for_capacity_timeout = 300
 
-  scaling_up_policy {
+  scaling_up_policy = {
     policy_name        = "Default Scaling Up Policy"
     metric_name        = "DefaultQueuesDepth"
     statistic          = "average"
@@ -71,7 +71,7 @@ resource "spotinst_elastigroup_aws" "default-elastigroup" {
     cooldown           = 300
   }
 
-  scaling_down_policy {
+  scaling_down_policy = {
     policy_name        = "Default Scaling Down Policy"
     metric_name        = "DefaultQueuesDepth"
     statistic          = "average"
@@ -224,7 +224,7 @@ Each `scheduled_task` supports the following:
 * `scale_target_capacity` - (Optional) The desired number of instances the group should have.
 * `scale_min_capacity` - (Optional) The minimum number of instances the group should have.
 * `scale_max_capacity` - (Optional) The maximum number of instances the group should have.
-* `is_enabled` - (Optional, Default: `false`) Setting the task to being enabled or disabled. Valid values: true, false.
+* `is_enabled` - (Optional, Default: `true`) Setting the task to being enabled or disabled.
 * `target_capacity` - (Optional; Only valid for statefulUpdateCapacity) The desired number of instances the group should have.
 * `min_capacity` - (Optional; Only valid for statefulUpdateCapacity) The minimum number of instances the group should have.
 * `max_capacity` - (Optional; Only valid for statefulUpdateCapacity) The maximum number of instances the group should have.
@@ -268,7 +268,9 @@ Each `scaling_*_policy` supports the following:
 * `period` - (Optional, Default: `300`) The granularity, in seconds, of the returned datapoints. Period must be at least 60 seconds and must be a multiple of 60.
 * `evaluation_periods` - (Optional, Default: `1`) The number of periods over which data is compared to the specified threshold.
 * `cooldown` - (Optional, Default: `300`) The amount of time, in seconds, after a scaling activity completes and before the next scaling activity can start. If this parameter is not specified, the default cooldown period for the group applies.
-* `dimensions` - (Optional) A mapping of dimensions describing qualities of the metric.
+* `dimensions` - (Optional) A list of dimensions describing qualities of the metric.
+    * `name` - (Required) The dimension name.
+    * `value` - (Required) The dimension value.
 * `operator` - (Optional, Scale Up Default: `gte`, Scale Down Default: `lte`) The operator to use in order to determine if the scaling policy is applicable. Valid values: `"gt"`, `"gte"`, `"lt"`, `"lte"`.
 * `source` - (Optional) The source of the metric. Valid values: `"cloudWatch"`, `"spectrum"`.
 
@@ -587,6 +589,7 @@ Usage:
 
     * `domains` - (Required) Collection of one or more domains to register.
         * `hosted_zone_id` - (Required) The id associated with a hosted zone.
+        * `spotinst_acct_id` - (Optional) The Spotinst account ID that is linked to the AWS account that holds the Route 53 hosted Zone ID. The default is the user Spotinst account provided as a URL parameter.
         * `record_sets` - (Required) Collection of records containing authoritative DNS information for the specified domain name.
             * `name` - (Required) The record set name.
             * `use_public_ip` - (Optional, Default: `false`) - Designates if the IP address should be exposed to connections outside the VPC.
@@ -596,7 +599,8 @@ Usage:
 ```hcl
     integration_route53 = {
       domains = {
-        hosted_zone_id = "zone-id"
+        hosted_zone_id   = "zone-id"
+        spotinst_acct_id = "act-123456"
         
         record_sets = {
           name          = "foo.example.com"
@@ -822,29 +826,35 @@ Usage:
     * `should_resume_stateful` - (Required) This will apply resuming action for Stateful instances in the Elastigroup upon scale up or capacity changes. Example usage will be for Elastigroups that will have scheduling rules to set a target capacity of 0 instances in the night and automatically restore the same state of the instances in the morning.
     * `auto_apply_tags` - (Optional) Enables updates to tags without rolling the group when set to `true`.
     * `should_roll` - (Required) Sets the enablement of the roll option.
-    * `wait_for_pct_complete` - (Optional) For use with `should_roll`. Sets minimum % of roll required to complete before continuing the plan.
-    * `wait_for_pct_timeout` - (Optional) For use with `should_roll`. Sets how long to wait for the deployed % of a roll to exceed `wait_for_pct_complete` before continuing the plan.
     * `roll_config` - (Required) While used, you can control whether the group should perform a deployment after an update to the configuration.
         * `batch_size_percentage` - (Required) Sets the percentage of the instances to deploy in each batch.
         * `health_check_type` - (Optional) Sets the health check type to use. Valid values: `"EC2"`, `"ECS_CLUSTER_INSTANCE"`, `"ELB"`, `"HCS"`, `"MLB"`, `"TARGET_GROUP"`, `"MULTAI_TARGET_SET"`, `"NONE"`.
         * `grace_period` - (Optional) Sets the grace period for new instances to become healthy.
         * `wait_for_roll_percentage` - (Optional) For use with `should_roll`. Sets minimum % of roll required to complete before continuing the plan. Required if `wait_for_roll_timeout` is set.
         * `wait_for_roll_timeout` - (Optional) For use with `should_roll`. Sets how long to wait for the deployed % of a roll to exceed `wait_for_roll_percentage` before continuing the plan. Required if `wait_for_roll_percentage` is set.
+        * `strategy` - (Optional) Strategy parameters
+           * `action` - (Required) Action to take. Valid values: `REPLACE_SERVER`, `RESTART_SERVER`.
+           * `should_drain_instances` - (Optional) Specify whether to drain incoming TCP connections before terminating a server.
+           * `batch_min_healthy_percentage` - (Optional, Default `50`) Indicates the threshold of minimum healthy instances in single batch. If the amount of healthy instances in single batch is under the threshold, the deployment will fail. Range `1` - `100`. 
        
 ```hcl
   update_policy = {
     should_resume_stateful = false
     should_roll            = false
     auto_apply_tags        = false
-    wait_for_pct_complete  = 10
-    wait_for_pct_timeout   = 1500
-    
+
     roll_config = {
       batch_size_percentage = 33
       health_check_type     = "ELB"
       grace_period          = 300
       wait_for_roll_percentage = 10
       wait_for_roll_timeout    = 1500
+      
+      strategy = {
+        action = "REPLACE_SERVER"
+        should_drain_instances = false
+        batch_min_healthy_percentage = 10
+      }
     }
   }
 ```       

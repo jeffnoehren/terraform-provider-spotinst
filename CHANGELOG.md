@@ -1,5 +1,37 @@
+## 1.9.0 (Unreleased)
 
-## 1.7.0 (Unreleased)
+ENHANCEMENTS:
+* resource/spotinst_elastigroup_azure: added `additional_ip_configs` to `network`
+* resource/spotinst_elastigroup_azure: added kubernetes and Multai to `integrations`
+* resource/spotinst_elastigroup_azure: added `scaling policies`
+
+BUG FIXES:
+* changed the order that credentials are set. See notes.
+* resource/spotinst_elastigroup_azure: `dimensions` changed to properly set `name` and `value` parameters
+* resource/spotinst_elastigroup_gcp: `dimensions` changed to properly set `name` and `value` parameters
+* resource/spotinst_elastigroup_aws: rolling with `wait_for_roll_percentage` no longer times out after 5 minutes
+* resource/spotinst_elastigroup_aws: removed duplicated `wait_for_roll_percentage` and `wait_for_roll_timeout`
+* resource/spotinst_mrscaler_aws: `visible_to_all_users` changed to deprecated. Values will not be sent in API calls.
+
+NOTES:
+* credentials are now given the following precedence: defined in the template, defined using environment variables, defined in ~/.spotinst/credentials
+* spotinst_mrscaler_aws_test: added a delay due to counter AWS rate limiting
+
+## 1.8.0 (February 28, 2019)
+
+ENHANCEMENTS:
+* resource/spotinst_elastigroup_aws: added optional `spotinst_acct_id` to Route53 integration
+* resource/spotinst_elastigroup_azure: added `update_policy` to control blue/green deployment options
+* resource/spotinst_elastigroup_gcp: added DockerSwarm integration. 
+* resource/spotinst_elastigroup_gcp: added `location_type` and `scheme` to `backend_services`
+
+BUG FIXES:
+* resource/spotinst_elastigroup_aws: `should_roll` now retries on `CANT_ROLL_CAPACITY_BELOW_MINIMUM` error
+* resource/spotinst_ocean_aws: `spot_percentage` no longer defaults to `0` when undefined
+* resource/spotinst_ocean_aws: `fallback_to_od` now defaults to `true` when undefined
+* resource/spotinst_elastigroup_aws: `dimensions` changed to properly set `name` and `value` parameters
+
+## 1.7.0 (February 19, 2019)
 
 FEATURES:
 * *New Resource*: `spotinst_mrscaler_aws`
@@ -20,7 +52,7 @@ ENHANCEMENTS:
 * resource/spotinst_elastigroup_aws_beanstalk: Added `deployment_preferences` and `managed_actions` parameters
 * added version to user-agent header. 
 
-## 1.6.1 (January 30th, 2019)
+## 1.6.1 (January 31, 2019)
 
 NOTES:
 * resource/spotinst_elastigroup_aws: Added `wait_for_roll_timeout` and `wait_for_roll_percentage` to `roll_config` in `update_policy`. Setting both of these fields enables users to wait for a minimum percent of their blue/green deployment to be completed before allowing the plan to continue execution.

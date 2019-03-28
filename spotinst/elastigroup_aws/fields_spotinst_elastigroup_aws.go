@@ -1037,16 +1037,6 @@ func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 						Required: true,
 					},
 
-					string(WaitForRollPct): {
-						Type:     schema.TypeInt,
-						Optional: true,
-					},
-
-					string(WaitForRollTimeout): {
-						Type:     schema.TypeInt,
-						Optional: true,
-					},
-
 					string(RollConfig): {
 						Type:     schema.TypeList,
 						Optional: true,
@@ -1077,6 +1067,31 @@ func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 								string(WaitForRollTimeout): {
 									Type:     schema.TypeInt,
 									Optional: true,
+								},
+
+								string(Strategy): {
+									Type:     schema.TypeList,
+									Optional: true,
+									MaxItems: 1,
+									Elem: &schema.Resource{
+										Schema: map[string]*schema.Schema{
+											string(Action): {
+												Type:     schema.TypeString,
+												Required: true,
+											},
+
+											string(ShouldDrainInstances): {
+												Type:     schema.TypeBool,
+												Optional: true,
+											},
+
+											string(BatchMinHealthyPercentage): {
+												Type:     schema.TypeInt,
+												Optional: true,
+												Default:  50,
+											},
+										},
+									},
 								},
 							},
 						},
