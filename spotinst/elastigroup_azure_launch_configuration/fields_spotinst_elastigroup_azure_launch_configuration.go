@@ -138,7 +138,7 @@ func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 				}
 				return false
 			},
-			StateFunc: HexStateFunc,
+			StateFunc: Base64StateFunc,
 		},
 		func(resourceObject interface{}, resourceData *schema.ResourceData, meta interface{}) error {
 			egWrapper := resourceObject.(*commons.ElastigroupAzureWrapper)
@@ -153,7 +153,7 @@ func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 					value = string(decodedScript)
 				}
 			}
-			if err := resourceData.Set(string(CustomData), HexStateFunc(value)); err != nil {
+			if err := resourceData.Set(string(CustomData), Base64StateFunc(value)); err != nil {
 				return fmt.Errorf(string(commons.FailureFieldReadPattern), string(CustomData), err)
 			}
 			return nil
