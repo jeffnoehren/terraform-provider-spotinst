@@ -443,6 +443,7 @@ func TestAccSpotinstElastigroupAzure_LaunchConfiguration(t *testing.T) {
 					testCheckElastigroupAzureAttributes(&group, groupName),
 					resource.TestCheckResourceAttr(resourceName, "user_data", elastigroup_azure_launch_configuration.HexStateFunc("hello world")),
 					resource.TestCheckResourceAttr(resourceName, "shutdown_script", elastigroup_azure_launch_configuration.HexStateFunc("goodbye world")),
+					resource.TestCheckResourceAttr(resourceName, "custom_data", elastigroup_azure_launch_configuration.HexStateFunc("custom world")),
 				),
 			},
 			{
@@ -455,6 +456,7 @@ func TestAccSpotinstElastigroupAzure_LaunchConfiguration(t *testing.T) {
 					testCheckElastigroupAzureAttributes(&group, groupName),
 					resource.TestCheckResourceAttr(resourceName, "user_data", elastigroup_azure_launch_configuration.HexStateFunc("hello world")),
 					resource.TestCheckResourceAttr(resourceName, "shutdown_script", elastigroup_azure_launch_configuration.HexStateFunc("goodbye world updated")),
+					resource.TestCheckResourceAttr(resourceName, "custom_data", elastigroup_azure_launch_configuration.HexStateFunc("custom world updated")),
 				),
 			},
 			{
@@ -476,6 +478,7 @@ const testAzureLaunchConfigurationGroupConfig_Create = `
 // --- LAUNCH CONFIGURATION --------------------
 user_data       = "hello world"
 shutdown_script = "goodbye world"
+custom_data     = "custom data"
 // ---------------------------------------------
 `
 
@@ -483,6 +486,7 @@ const testAzureLaunchConfigurationGroupConfig_Update = `
 // --- LAUNCH CONFIGURATION --------------------
 user_data       = "hello world"
 shutdown_script = "goodbye world updated"
+custom_data     = "custom data updated"
 // ---------------------------------------------
 `
 
