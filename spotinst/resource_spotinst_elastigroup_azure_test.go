@@ -467,7 +467,7 @@ func TestAccSpotinstElastigroupAzure_LaunchConfiguration(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testCheckElastigroupAzureExists(&group, resourceName),
 					testCheckElastigroupAzureAttributes(&group, groupName),
-					resource.TestCheckResourceAttr(resourceName, "user_data", elastigroup_azure_launch_configuration.HexStateFunc("hello world")),
+					resource.TestCheckResourceAttr(resourceName, "user_data", elastigroup_azure_launch_configuration.Base64StateFunc("hello world")),
 				),
 			},
 		},
