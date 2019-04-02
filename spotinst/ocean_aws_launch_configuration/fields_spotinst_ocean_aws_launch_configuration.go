@@ -278,9 +278,9 @@ func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 
 			var value *bool = nil
 			if cluster.Compute != nil && cluster.Compute.LaunchSpecification != nil &&
-				cluster.Compute.LaunchSpecification.AssociatePublicIPAddress != nil {
+				cluster.Compute.LaunchSpecification.AssociatePublicIpAddress != nil {
 
-				value = cluster.Compute.LaunchSpecification.AssociatePublicIPAddress
+				value = cluster.Compute.LaunchSpecification.AssociatePublicIpAddress
 			}
 
 			if err := resourceData.Set(string(AssociatePublicIpAddress), value); err != nil {
@@ -294,7 +294,7 @@ func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 			cluster := clusterWrapper.GetCluster()
 
 			if v, ok := resourceData.GetOkExists(string(AssociatePublicIpAddress)); ok {
-				cluster.Compute.LaunchSpecification.SetAssociatePublicIPAddress(spotinst.Bool(v.(bool)))
+				cluster.Compute.LaunchSpecification.SetAssociatePublicIpAddress(spotinst.Bool(v.(bool)))
 			}
 			return nil
 		},
@@ -303,7 +303,7 @@ func Setup(fieldsMap map[commons.FieldName]*commons.GenericField) {
 			cluster := clusterWrapper.GetCluster()
 
 			if v, ok := resourceData.GetOkExists(string(AssociatePublicIpAddress)); ok {
-				cluster.Compute.LaunchSpecification.SetAssociatePublicIPAddress(spotinst.Bool(v.(bool)))
+				cluster.Compute.LaunchSpecification.SetAssociatePublicIpAddress(spotinst.Bool(v.(bool)))
 			}
 			return nil
 		},
