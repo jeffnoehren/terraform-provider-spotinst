@@ -478,7 +478,7 @@ const testAzureLaunchConfigurationGroupConfig_Create = `
 // --- LAUNCH CONFIGURATION --------------------
 user_data       = "hello world"
 shutdown_script = "goodbye world"
-custom_data     = "custom data"
+custom_data     = "custom world"
 // ---------------------------------------------
 `
 
@@ -486,7 +486,7 @@ const testAzureLaunchConfigurationGroupConfig_Update = `
 // --- LAUNCH CONFIGURATION --------------------
 user_data       = "hello world"
 shutdown_script = "goodbye world updated"
-custom_data     = "custom data updated"
+custom_data     = "custom world updated"
 // ---------------------------------------------
 `
 
